@@ -53,28 +53,8 @@ public class MainFrame {
     static Color textFieldColor = new Color(234, 238, 186);
     static JLabel welcomeLabel;
     static JButton admin;
-    private static JTable arrive_table;
-    private static JTable depart_table;
-    private static JTable allReservations_table;
-    private static JCheckBox payed;
-    private static JButton home;
-    private static JButton reservation;
-    private static JButton room;
     static JButton credit_card;
-    private static JButton cancelButton;
-    private static JButton postponedButton_1;
-    private static JButton viewButton_1;
-    private static JButton editButton;
-    private static JCheckBox checkOut;
-    private static JButton postponedButton_2;
-    private static JButton viewButton_2;
-    private static JButton viewRooms;
-    private static JButton viewCostomer;
-    private static JPanel centerDownPane;
-    private static JPanel contentPane;
-    private static Font tableFont = new Font("Lucida Console", Font.PLAIN, 11);
     static Font addInfoFont = new Font("Bookman Old Style", Font.PLAIN, 13);
-    private static Color tableTextColor = new Color(94, 80, 80);
     static JFrame HomeWindow;
     static Color myColor = new Color(238, 238, 238);
     static Color contentColor = new Color(231, 234, 239);
@@ -89,7 +69,27 @@ public class MainFrame {
     static JLabel departure_RNo;
     static JTextField arrival_RNoValue;
     static JTextField departure_RNoValue;
+    private static JTable arrive_table;
+    private static JTable depart_table;
+    private static JTable allReservations_table;
+    private static JCheckBox payed;
+    private static JButton home;
+    private static JButton reservation;
+    private static JButton room;
+    private static JButton cancelButton;
+    private static JButton postponedButton_1;
+    private static JButton viewButton_1;
+    private static JButton editButton;
+    private static JCheckBox checkOut;
+    private static JButton postponedButton_2;
+    private static JButton viewButton_2;
     static JPanel centerPaneContainer = expected_Arrive_Depart();
+    private static JButton viewRooms;
+    private static JButton viewCostomer;
+    private static JPanel centerDownPane;
+    private static JPanel contentPane;
+    private static Font tableFont = new Font("Lucida Console", Font.PLAIN, 11);
+    private static Color tableTextColor = new Color(94, 80, 80);
 
     public MainFrame() {
 
@@ -157,53 +157,45 @@ public class MainFrame {
         admin = new JButton("");
         admin.setIcon(new ImageIcon(this.getClass().getResource("/icons/administrator.png")));
         admin.setToolTipText("Administrator");
-        admin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                centerPaneContainer.removeAll();
-                centerPaneContainer.add(adminCenterPane());
+        admin.addActionListener(e -> {
+            centerPaneContainer.removeAll();
+            centerPaneContainer.add(adminCenterPane());
 
-                contentPane.add(centerPaneContainer, BorderLayout.CENTER);
-                centerPaneContainer.repaint();
-            }
+            contentPane.add(centerPaneContainer, BorderLayout.CENTER);
+            centerPaneContainer.repaint();
         });
 
         receptionist = new JButton("");
         receptionist.setIcon(new ImageIcon(this.getClass().getResource("/icons/waiter.png")));
         receptionist.setToolTipText("Receptionist");
-        receptionist.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                centerPaneContainer.removeAll();
-                centerPaneContainer.add(userAccount());
+        receptionist.addActionListener(e -> {
+            centerPaneContainer.removeAll();
+            centerPaneContainer.add(userAccount());
 
-                contentPane.add(centerPaneContainer, BorderLayout.CENTER);
-                centerPaneContainer.repaint();
-            }
+            contentPane.add(centerPaneContainer, BorderLayout.CENTER);
+            centerPaneContainer.repaint();
         });
 
         credit_card = new JButton("");
         credit_card.setIcon(new ImageIcon(this.getClass().getResource("/icons/credit_card.PNG")));
         credit_card.setToolTipText("Payment");
-        credit_card.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                centerPaneContainer.removeAll();
-                centerPaneContainer.add(paymentsPane());
+        credit_card.addActionListener(e -> {
+            centerPaneContainer.removeAll();
+            centerPaneContainer.add(paymentsPane());
 
-                contentPane.add(centerPaneContainer, BorderLayout.CENTER);
-                centerPaneContainer.repaint();
-            }
+            contentPane.add(centerPaneContainer, BorderLayout.CENTER);
+            centerPaneContainer.repaint();
         });
 
         JButton exit = new JButton("");
         exit.setIcon(new ImageIcon(this.getClass().getResource("/icons/exit.png")));
         exit.setToolTipText("Exit");
-        exit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        exit.addActionListener(e -> {
 
-                int choice;
-                choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Warning", JOptionPane.YES_NO_OPTION);
-                if (choice == 0) {
-                    System.exit(0);
-                }
+            int choice;
+            choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Warning", JOptionPane.YES_NO_OPTION);
+            if (choice == 0) {
+                System.exit(0);
             }
         });
 
@@ -392,64 +384,62 @@ public class MainFrame {
         checkIN.setForeground(Color.RED);
         checkIN.setEnabled(false);
         checkIN.setBackground(myColor);
-        checkIN.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (checkIN.isSelected()) {
+        checkIN.addActionListener(e -> {
+            if (checkIN.isSelected()) {
 
-                    String str = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
-                    int choice;
-                    choice = JOptionPane.showConfirmDialog(null, "Do you collect the payment?", "Warning", JOptionPane.YES_NO_OPTION);
-                    if (choice == 0) {
-                        try {
+                String str = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
+                int choice;
+                choice = JOptionPane.showConfirmDialog(null, "Do you collect the payment?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (choice == 0) {
+                    try {
 
-                            Connection con;
-                            Statement st;
-                            ResultSet rs;
+                        Connection con;
+                        Statement st;
+                        ResultSet rs;
 
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
+                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
 
-                            rs.first();
+                        rs.first();
 
-                            rs.updateString("Status", checkIN.getText());
-                            String strRoomNo = rs.getString("Room No");
+                        rs.updateString("Status", checkIN.getText());
+                        String strRoomNo = rs.getString("Room No");
 
-                            rs.updateRow();
+                        rs.updateRow();
 
-                            Statement st1 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            ResultSet rs1 = st1.executeQuery("SELECT * FROM `users` WHERE `users`.`Staff ID` = '" + LoginWindow.user + "'");
-                            rs1.first();
+                        Statement st1 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        ResultSet rs1 = st1.executeQuery("SELECT * FROM `users` WHERE `users`.`Staff ID` = '" + LoginWindow.user + "'");
+                        rs1.first();
 
-                            Date paymentDate = new Date();
-                            SimpleDateFormat paymentFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        Date paymentDate = new Date();
+                        SimpleDateFormat paymentFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                            st.executeUpdate("INSERT INTO `payments` (`Res`, `Paid By`, `Recieved By`, `Date`, `Amount(=N=)`) VALUES ('" + rs.getString("Res") + "', '" + rs.getString("First Name") + " " + rs.getString("Last Name") + "', '" + rs1.getString("First Name") + " " + rs1.getString("Last Name") + "', '" + paymentFormat.format(paymentDate) + "', '" + rs.getString("Total Prize") + "')");
+                        st.executeUpdate("INSERT INTO `payments` (`Res`, `Paid By`, `Recieved By`, `Date`, `Amount(=N=)`) VALUES ('" + rs.getString("Res") + "', '" + rs.getString("First Name") + " " + rs.getString("Last Name") + "', '" + rs1.getString("First Name") + " " + rs1.getString("Last Name") + "', '" + paymentFormat.format(paymentDate) + "', '" + rs.getString("Total Prize") + "')");
 
-                            JOptionPane.showMessageDialog(null, "Checked in.");
+                        JOptionPane.showMessageDialog(null, "Checked in.");
 
-                            centerPaneContainer.removeAll();
-                            centerPaneContainer.add(expected_Arrive_Depart());
+                        centerPaneContainer.removeAll();
+                        centerPaneContainer.add(expected_Arrive_Depart());
 
-                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            rs = st.executeQuery("SELECT * FROM `rooms` WHERE `Room No`='" + strRoomNo + "'");
+                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        rs = st.executeQuery("SELECT * FROM `rooms` WHERE `Room No`='" + strRoomNo + "'");
 
-                            rs.first();
+                        rs.first();
 
-                            rs.updateString("Status", "Occupied");
+                        rs.updateString("Status", "Occupied");
 
-                            rs.updateRow();
+                        rs.updateRow();
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        payed.setSelected(false);
-                        checkIN.setSelected(false);
-                        checkIN.setEnabled(false);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
+                } else {
+                    payed.setSelected(false);
+                    checkIN.setSelected(false);
+                    checkIN.setEnabled(false);
                 }
             }
         });
@@ -459,21 +449,17 @@ public class MainFrame {
         payed.setForeground(Color.RED);
         payed.setEnabled(false);
         payed.setBackground(myColor);
-        payed.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (payed.isSelected()) {
-                    checkIN.setEnabled(true);
-                }
+        payed.addActionListener(e -> {
+            if (payed.isSelected()) {
+                checkIN.setEnabled(true);
             }
         });
 
-        postponedButton_1 = new JButton("Postpond");
+        postponedButton_1 = new JButton("Postponed");
         postponedButton_1.setEnabled(false);
-        postponedButton_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PospondReservation.resColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
-                new PospondReservation();
-            }
+        postponedButton_1.addActionListener(e -> {
+            PospondReservation.resColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
+            new PospondReservation();
         });
 
         viewButton_1 = new JButton("View");
@@ -700,21 +686,19 @@ public class MainFrame {
         departure_RNoValue.setPreferredSize(new Dimension(90, 30));
         departure_RNoValue.setMaximumSize(new Dimension(90, 30));
         departure_RNoValue.setEnabled(false);
-        departure_RNoValue.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (getRowByValue(departure_RNoValue.getText(), depart_table) != 0) {
-                    depart_table.requestFocus();
-                    depart_table.changeSelection(getRowByValue(departure_RNoValue.getText(), depart_table), 0, false, false);
+        departure_RNoValue.addActionListener(e -> {
+            if (getRowByValue(departure_RNoValue.getText(), depart_table) != 0) {
+                depart_table.requestFocus();
+                depart_table.changeSelection(getRowByValue(departure_RNoValue.getText(), depart_table), 0, false, false);
 
-                    checkOut.setEnabled(true);
-                    postponedButton_2.setEnabled(true);
-                    viewButton_2.setEnabled(true);
+                checkOut.setEnabled(true);
+                postponedButton_2.setEnabled(true);
+                viewButton_2.setEnabled(true);
 
-                    departure_RNoValue.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Sorry! Reservation number not found");
-                    departure_RNoValue.setText("");
-                }
+                departure_RNoValue.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Sorry! Reservation number not found");
+                departure_RNoValue.setText("");
             }
         });
 
@@ -723,85 +707,75 @@ public class MainFrame {
         checkOut.setForeground(Color.RED);
         checkOut.setEnabled(false);
         checkOut.setBackground(myColor);
-        checkOut.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (checkOut.isSelected()) {
+        checkOut.addActionListener(e -> {
+            if (checkOut.isSelected()) {
 
-                    String str = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
+                String str = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
 
-                    int choice;
-                    choice = JOptionPane.showConfirmDialog(null, "Do you verify the payment?", "Warning", JOptionPane.YES_NO_OPTION);
-                    if (choice == 0) {
-                        try {
+                int choice;
+                choice = JOptionPane.showConfirmDialog(null, "Do you verify the payment?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (choice == 0) {
+                    try {
 
-                            Connection con;
-                            Statement st;
-                            ResultSet rs;
+                        Connection con;
+                        Statement st;
+                        ResultSet rs;
 
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
+                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
 
-                            rs.first();
+                        rs.first();
 
-                            rs.updateString("Status", "Checked Out");
+                        rs.updateString("Status", "Checked Out");
 
-                            String strRoomNo = rs.getString("Room No");
+                        String strRoomNo = rs.getString("Room No");
 
-                            rs.updateRow();
+                        rs.updateRow();
 
-                            JOptionPane.showMessageDialog(null, "Checked out!");
+                        JOptionPane.showMessageDialog(null, "Checked out!");
 
-                            centerPaneContainer.removeAll();
-                            centerPaneContainer.add(expected_Arrive_Depart());
+                        centerPaneContainer.removeAll();
+                        centerPaneContainer.add(expected_Arrive_Depart());
 
-                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                            rs = st.executeQuery("SELECT * FROM `rooms` WHERE `Room No`='" + strRoomNo + "'");
+                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                        rs = st.executeQuery("SELECT * FROM `rooms` WHERE `Room No`='" + strRoomNo + "'");
 
-                            rs.first();
+                        rs.first();
 
-                            rs.updateString("Status", "Available");
+                        rs.updateString("Status", "Available");
 
-                            rs.updateRow();
+                        rs.updateRow();
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        checkOut.setSelected(false);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
+                } else {
+                    checkOut.setSelected(false);
                 }
             }
         });
 
         JButton refresh = new JButton("Refresh All");
-        refresh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                home.doClick();
-            }
-        });
+        refresh.addActionListener(e -> home.doClick());
 
         postponedButton_2 = new JButton("Postponed");
         postponedButton_2.setPreferredSize(refresh.getPreferredSize());
         postponedButton_2.setEnabled(false);
-        postponedButton_2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PospondReservation.resColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
-                new PospondReservation();
-                PospondButton.arriveDateValue.setEnabled(false);
-            }
+        postponedButton_2.addActionListener(e -> {
+            PospondReservation.resColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
+            new PospondReservation();
+            PospondButton.arriveDateValue.setEnabled(false);
         });
 
         viewButton_2 = new JButton("View");
         viewButton_2.setPreferredSize(refresh.getPreferredSize());
         viewButton_2.setEnabled(false);
-        viewButton_2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ViewQuest.viewColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
-                new ViewQuest();
-            }
+        viewButton_2.addActionListener(e -> {
+            ViewQuest.viewColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
+            new ViewQuest();
         });
 
         depart_table.addMouseListener(new MouseAdapter() {
@@ -1127,238 +1101,224 @@ public class MainFrame {
 
         final JButton addReservation = new JButton("Add New");
 
-        addReservation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                final Reservation addRes = new Reservation();
+        addReservation.addActionListener(e -> {
+            final Reservation addRes = new Reservation();
 
-                JPanel down_ButtonPanel = new JPanel();
-                down_ButtonPanel.setMaximumSize(new Dimension(550, 70));
-                down_ButtonPanel.setPreferredSize(new Dimension(550, 70));
-                down_ButtonPanel.setMinimumSize(new Dimension(550, 70));
-                down_ButtonPanel.setLayout(new BoxLayout(down_ButtonPanel, BoxLayout.LINE_AXIS));
-                down_ButtonPanel.add(Box.createHorizontalGlue());
-                down_ButtonPanel.setOpaque(false);
+            JPanel down_ButtonPanel = new JPanel();
+            down_ButtonPanel.setMaximumSize(new Dimension(550, 70));
+            down_ButtonPanel.setPreferredSize(new Dimension(550, 70));
+            down_ButtonPanel.setMinimumSize(new Dimension(550, 70));
+            down_ButtonPanel.setLayout(new BoxLayout(down_ButtonPanel, BoxLayout.LINE_AXIS));
+            down_ButtonPanel.add(Box.createHorizontalGlue());
+            down_ButtonPanel.setOpaque(false);
 
-                JButton add_Button = new JButton("Add");
-                JButton cancel_Button = new JButton("Cancel");
-                add_Button.setPreferredSize(cancel_Button.getPreferredSize());
+            JButton add_Button = new JButton("Add");
+            JButton cancel_Button = new JButton("Cancel");
+            add_Button.setPreferredSize(cancel_Button.getPreferredSize());
 
-                add_Button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
+            add_Button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
 
-                        if ((addRes.fnameValue.getText()).equals("") || (addRes.lnameValue.getText()).equals("") || (addRes.phoneNumber.getText()).equals("") || (addRes.addressValue.getText()).equals("") || (addRes.idNumber_Value.getText()).equals("") || (addRes.arrivalDate_Value.getDate()).equals("") || (addRes.departureDate_Value.getDate()).equals("") || (addRes.roomRate_Value.getText()).equals("")) {
-                            JOptionPane.showMessageDialog(null, "Form must be filled with all values before it can be submitted");
-                        } else {
+                    if ((addRes.fnameValue.getText()).equals("") || (addRes.lnameValue.getText()).equals("") || (addRes.phoneNumber.getText()).equals("") || (addRes.addressValue.getText()).equals("") || (addRes.idNumber_Value.getText()).equals("") || (addRes.arrivalDate_Value.getDate()).equals("") || (addRes.departureDate_Value.getDate()).equals("") || (addRes.roomRate_Value.getText()).equals("")) {
+                        JOptionPane.showMessageDialog(null, "Form must be filled with all values before it can be submitted");
+                    } else {
 
-                            try {
+                        try {
 
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                                st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                rs = st.executeQuery("SELECT * FROM `reservations` ORDER BY `Res` DESC");
+                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                            rs = st.executeQuery("SELECT * FROM `reservations` ORDER BY `Res` DESC");
 
-                                rs.moveToInsertRow();
+                            rs.moveToInsertRow();
 
-                                rs.updateString("Res", addRes.reservation_Number.getText());
-                                rs.updateString("First Name", addRes.fnameValue.getText().toUpperCase());
-                                rs.updateString("Last Name", addRes.lnameValue.getText().toUpperCase());
-                                rs.updateString("Gender", addRes.genderValues.getSelectedItem().toString());
-                                rs.updateString("Phone No", addRes.phoneNumber.getText());
-                                rs.updateString("Country", addRes.countryValues.getSelectedItem().toString());
-                                rs.updateString("Address", addRes.addressValue.getText().toUpperCase());
-                                rs.updateString("ID Type", addRes.idType_Value.getSelectedItem().toString());
-                                rs.updateString("ID No", addRes.idNumber_Value.getText().toUpperCase());
+                            rs.updateString("Res", addRes.reservation_Number.getText());
+                            rs.updateString("First Name", addRes.fnameValue.getText().toUpperCase());
+                            rs.updateString("Last Name", addRes.lnameValue.getText().toUpperCase());
+                            rs.updateString("Gender", addRes.genderValues.getSelectedItem().toString());
+                            rs.updateString("Phone No", addRes.phoneNumber.getText());
+                            rs.updateString("Country", addRes.countryValues.getSelectedItem().toString());
+                            rs.updateString("Address", addRes.addressValue.getText().toUpperCase());
+                            rs.updateString("ID Type", addRes.idType_Value.getSelectedItem().toString());
+                            rs.updateString("ID No", addRes.idNumber_Value.getText().toUpperCase());
 
-                                rs.updateString("Arrival", addRes.arrivalDate_Value.returnStringDate());
-                                rs.updateString("Departure", addRes.departureDate_Value.returnStringDate());
+                            rs.updateString("Arrival", addRes.arrivalDate_Value.returnStringDate());
+                            rs.updateString("Departure", addRes.departureDate_Value.returnStringDate());
 
-                                rs.updateString("Days", addRes.noOfDays_Value.getText());
+                            rs.updateString("Days", addRes.noOfDays_Value.getText());
 
-                                rs.updateString("RDate", (new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toString());
+                            rs.updateString("RDate", (new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toString());
 
-                                rs.updateString("Room Type", addRes.roomType_Value.getSelectedItem().toString());
+                            rs.updateString("Room Type", addRes.roomType_Value.getSelectedItem().toString());
 
-                                String strRoomNo = addRes.roomNumber_Value.getSelectedItem().toString();
-                                rs.updateString("Room No", strRoomNo);
+                            String strRoomNo = addRes.roomNumber_Value.getSelectedItem().toString();
+                            rs.updateString("Room No", strRoomNo);
 
-                                rs.updateString("Room Rate", addRes.roomRate_Value.getText());
-                                rs.updateString("Total Prize", addRes.totalPrizeValue.getText());
+                            rs.updateString("Room Rate", addRes.roomRate_Value.getText());
+                            rs.updateString("Total Prize", addRes.totalPrizeValue.getText());
 
-                                rs.updateString("Status", "Waiting");
+                            rs.updateString("Status", "Waiting");
 
-                                rs.insertRow();
+                            rs.insertRow();
 
-                                JOptionPane.showMessageDialog(null, "Record Inserted");
-                                addRes.dispose();
-
-                                rs.close();
-                                st.close();
-
-                                st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                rs = st.executeQuery("SELECT * FROM `reservations` ORDER BY `Res`");
-
-                                centerPaneContainer.removeAll();
-                                centerPaneContainer.add(allReservations());
-
-
-                                st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                                st.executeUpdate("UPDATE `rooms` SET `Status` = 'Reserved' WHERE `Room No` = '" + strRoomNo + "'");
-
-
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
-                });
-
-                cancel_Button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int choice;
-                        choice = JOptionPane.showConfirmDialog(null, "Data not saved, do you want to cancel?", "Warning", JOptionPane.YES_NO_OPTION);
-                        if (choice == 0) {
+                            JOptionPane.showMessageDialog(null, "Record Inserted");
                             addRes.dispose();
-                            Reservation.reservationCounter -= 1;
+
+                            rs.close();
+                            st.close();
+
+                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                            rs = st.executeQuery("SELECT * FROM `reservations` ORDER BY `Res`");
+
+                            centerPaneContainer.removeAll();
+                            centerPaneContainer.add(allReservations());
+
+
+                            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                            st.executeUpdate("UPDATE `rooms` SET `Status` = 'Reserved' WHERE `Room No` = '" + strRoomNo + "'");
+
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
-                });
+                }
+            });
 
-                down_ButtonPanel.add(add_Button);
-                down_ButtonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-                down_ButtonPanel.add(cancel_Button);
+            cancel_Button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int choice;
+                    choice = JOptionPane.showConfirmDialog(null, "Data not saved, do you want to cancel?", "Warning", JOptionPane.YES_NO_OPTION);
+                    if (choice == 0) {
+                        addRes.dispose();
+                        Reservation.reservationCounter -= 1;
+                    }
+                }
+            });
 
-                addRes.add(down_ButtonPanel);
-                addRes.add(Box.createRigidArea(new Dimension(0, 10)));
-                addRes.setVisible(true);
+            down_ButtonPanel.add(add_Button);
+            down_ButtonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            down_ButtonPanel.add(cancel_Button);
 
-            }
+            addRes.add(down_ButtonPanel);
+            addRes.add(Box.createRigidArea(new Dimension(0, 10)));
+            addRes.setVisible(true);
+
         });
 
         final JButton editReservation = new JButton("Edit");
         editReservation.setEnabled(false);
         editReservation.setPreferredSize(addReservation.getPreferredSize());
-        editReservation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        editReservation.addActionListener(e -> {
 
-                EditReservation.resColumnData = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
+            EditReservation.resColumnData = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
 
-                new EditReservation();
-            }
+            new EditReservation();
         });
 
         final JButton viewPerson = new JButton("View Details");
         viewPerson.setEnabled(false);
         viewPerson.setBackground(new Color(80, 169, 169));
-        viewPerson.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ViewQuest.viewColumnData = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
-                new ViewQuest();
-            }
+        viewPerson.addActionListener(e -> {
+            ViewQuest.viewColumnData = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
+            new ViewQuest();
         });
 
         final JButton cancelButton2 = new JButton("Cancel");
         cancelButton2.setPreferredSize(addReservation.getPreferredSize());
         cancelButton2.setEnabled(false);
         cancelButton2.setBackground(new Color(80, 169, 169));
-        cancelButton2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        cancelButton2.addActionListener(e -> {
 
-                String str = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
-                String str2 = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 6).toString();
+            String str = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
+            String str2 = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 6).toString();
 
-                int choice;
+            int choice;
 
-                choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the reservation?", "Warning", JOptionPane.YES_NO_OPTION);
+            choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the reservation?", "Warning", JOptionPane.YES_NO_OPTION);
 
-                if (choice == 0) {
-                    try {
+            if (choice == 0) {
+                try {
 
-                        Connection con;
-                        Statement st;
-                        ResultSet rs;
+                    Connection con;
+                    Statement st;
+                    ResultSet rs;
 
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                        rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
+                    st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
 
-                        rs.first();
+                    rs.first();
 
-                        rs.updateString("Status", "Canceled");
-                        rs.updateString("CancelDate", (new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toString());
+                    rs.updateString("Status", "Canceled");
+                    rs.updateString("CancelDate", (new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toString());
 
-                        rs.updateRow();
-                        rs.close();
-                        st.close();
+                    rs.updateRow();
+                    rs.close();
+                    st.close();
 
-                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                        st.executeUpdate("UPDATE `rooms` SET `Status` = 'Available' WHERE `Room No`='" + str2 + "'");
+                    st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    st.executeUpdate("UPDATE `rooms` SET `Status` = 'Available' WHERE `Room No`='" + str2 + "'");
 
 
-                        JOptionPane.showMessageDialog(null, "Reservation canceled!");
+                    JOptionPane.showMessageDialog(null, "Reservation canceled!");
 
-                        centerPaneContainer.removeAll();
-                        centerPaneContainer.add(expected_Arrive_Depart());
+                    centerPaneContainer.removeAll();
+                    centerPaneContainer.add(expected_Arrive_Depart());
 
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
 
         JButton refresh = new JButton("Refresh All");
-        refresh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                reservation.doClick();
-            }
-        });
+        refresh.addActionListener(e -> reservation.doClick());
 
-        searchQuestValue.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (getRowByValue(searchQuestValue.getText(), allReservations_table) != 0) {
-                    allReservations_table.requestFocus();
-                    allReservations_table.changeSelection(getRowByValue(searchQuestValue.getText(), allReservations_table), 0, false, false);
+        searchQuestValue.addActionListener(e -> {
+            if (getRowByValue(searchQuestValue.getText(), allReservations_table) != 0) {
+                allReservations_table.requestFocus();
+                allReservations_table.changeSelection(getRowByValue(searchQuestValue.getText(), allReservations_table), 0, false, false);
 
-                    editReservation.setEnabled(true);
-                    viewPerson.setEnabled(true);
+                editReservation.setEnabled(true);
+                viewPerson.setEnabled(true);
 
-                    String str = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
+                String str = allReservations_table.getValueAt(allReservations_table.getSelectedRow(), 0).toString();
 
-                    try {
+                try {
 
-                        Connection con;
-                        Statement st;
-                        ResultSet rs;
+                    Connection con;
+                    Statement st;
+                    ResultSet rs;
 
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                        rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
+                    st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Res`='" + str + "'");
 
-                        rs.first();
+                    rs.first();
 
-                        if (rs.getString("Status").equals("Waiting")) {
-                            cancelButton2.setEnabled(true);
-                        } else {
-                            cancelButton2.setEnabled(false);
-                        }
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    if (rs.getString("Status").equals("Waiting")) {
+                        cancelButton2.setEnabled(true);
+                    } else {
+                        cancelButton2.setEnabled(false);
                     }
 
-                    resAdditionalInfo();
-
-                    searchQuestValue.setText("");
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Sorry! Reservation number not found");
-                    searchQuestValue.setText("");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
+
+                resAdditionalInfo();
+
+                searchQuestValue.setText("");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Sorry! Reservation number not found");
+                searchQuestValue.setText("");
             }
         });
 
@@ -1528,131 +1488,129 @@ public class MainFrame {
 
         viewRooms = new JButton("Rooms");
         viewRooms.setBackground(new Color(198, 192, 128));
-        viewRooms.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        viewRooms.addActionListener(e -> {
 
-                final JPanel centerUpPane = new JPanel();
-                centerUpPane.setLayout(new BoxLayout(centerUpPane, BoxLayout.PAGE_AXIS));
-                TitledBorder centerUpBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), " ROOMS MANAGEMENT ");
-                centerUpBorder.setTitleJustification(TitledBorder.CENTER);
-                centerUpPane.setBorder(centerUpBorder);
-                centerUpPane.setBackground(myColor);
+            final JPanel centerUpPane1 = new JPanel();
+            centerUpPane1.setLayout(new BoxLayout(centerUpPane1, BoxLayout.PAGE_AXIS));
+            TitledBorder centerUpBorder1 = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), " ROOMS MANAGEMENT ");
+            centerUpBorder1.setTitleJustification(TitledBorder.CENTER);
+            centerUpPane1.setBorder(centerUpBorder1);
+            centerUpPane1.setBackground(myColor);
 
-                final Vector<String> reservedRoomsColumnNames = new Vector<String>();
-                final Vector<Vector<Object>> reservedRoomsData = new Vector<Vector<Object>>();
+            final Vector<String> reservedRoomsColumnNames = new Vector<String>();
+            final Vector<Vector<Object>> reservedRoomsData = new Vector<Vector<Object>>();
 
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                    String sql = "SELECT * FROM `rooms` ORDER BY `Room No`";
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(sql);
-                    ResultSetMetaData md = rs.getMetaData();
-                    int columns = md.getColumnCount();
+                String sql = "SELECT * FROM `rooms` ORDER BY `Room No`";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                ResultSetMetaData md = rs.getMetaData();
+                int columns = md.getColumnCount();
+                for (int i = 1; i <= columns; i++) {
+                    reservedRoomsColumnNames.addElement(md.getColumnName(i));
+                }
+                while (rs.next()) {
+                    Vector<Object> row = new Vector<Object>(columns);
                     for (int i = 1; i <= columns; i++) {
-                        reservedRoomsColumnNames.addElement(md.getColumnName(i));
+                        row.addElement(rs.getObject(i));
                     }
-                    while (rs.next()) {
-                        Vector<Object> row = new Vector<Object>(columns);
-                        for (int i = 1; i <= columns; i++) {
-                            row.addElement(rs.getObject(i));
-                        }
-                        reservedRoomsData.addElement(row);
-                    }
-                    rs.close();
-                    stmt.close();
-                } catch (Exception ex) {
-                    System.out.println(ex);
+                    reservedRoomsData.addElement(row);
                 }
-
-                JTable roomTable = new JTable(reservedRoomsData, reservedRoomsColumnNames) {
-                    private static final long serialVersionUID = 1L;
-
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-
-                roomTable.setOpaque(false);
-                roomTable.getTableHeader().setReorderingAllowed(false);
-                roomTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                roomTable.setFont(tableFont);
-                roomTable.setForeground(tableTextColor);
-                roomTable.setGridColor(new Color(223, 223, 223));
-                roomTable.setShowGrid(true);
-                roomTable.setShowVerticalLines(false);
-
-                TableColumn roomTablecol = null;
-
-                for (int i = 0; i < roomTable.getColumnCount(); i++) {
-                    if (i == 1 || i == 4 || i == 3) {
-                        roomTablecol.setMinWidth(80);
-                        roomTablecol.setPreferredWidth(80);
-                        roomTablecol.setMaxWidth(80);
-                    } else if (i == 2) {
-                        roomTablecol.setMinWidth(120);
-                        roomTablecol.setPreferredWidth(120);
-                        roomTablecol.setMaxWidth(120);
-                    } else if (i == 5) {
-                        roomTablecol.setMinWidth(550);
-                        roomTablecol.setPreferredWidth(550);
-                        roomTablecol.setMaxWidth(550);
-                    }
-                    roomTablecol = roomTable.getColumnModel().getColumn(i);
-                    roomTablecol.setCellRenderer(new CustomTableCellRenderer());
-                    roomTablecol.setResizable(false);
-                }
-
-                JTableHeader roomHeader = roomTable.getTableHeader();
-                roomHeader.setBackground(new Color(80, 169, 169));
-
-                final JScrollPane roomTableContainer = new JScrollPane(roomTable);
-                roomTableContainer.getViewport().setBackground(contentColor);
-                roomTableContainer.setMinimumSize(new Dimension(1100, 505));
-                roomTableContainer.setPreferredSize(new Dimension(1100, 505));
-                roomTableContainer.setMaximumSize(new Dimension(1100, 505));
-
-                centerUpPane.add(roomTableContainer);
-
-                JButton viewStaffs = new JButton("Staffs");
-                viewStaffs.setBackground(new Color(198, 192, 128));
-                viewStaffs.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-
-                        centerPaneContainer.removeAll();
-                        centerPaneContainer.add(adminCenterPane());
-                        centerPaneContainer.repaint();
-                    }
-                });
-
-                JButton addRooms = new JButton("Add");
-                addRooms.setPreferredSize(viewStaffs.getPreferredSize());
-                addRooms.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        new AddRooms();
-                    }
-                });
-
-                JPanel buttonPanel = new JPanel();
-                buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
-                buttonPanel.add(Box.createHorizontalGlue());
-                buttonPanel.setBackground(myColor);
-
-                JButton cancel_Button = new JButton("Cancel");
-                JButton add_Button = new JButton("Add");
-                add_Button.setPreferredSize(cancel_Button.getPreferredSize());
-
-                buttonPanel.add(viewStaffs);
-                buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-                buttonPanel.add(addRooms);
-
-                centerPane.removeAll();
-                centerPane.add(centerUpPane);
-                centerPane.add(Box.createRigidArea(new Dimension(0, 10)));
-                centerPane.add(buttonPanel);
-
+                rs.close();
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
+
+            JTable roomTable = new JTable(reservedRoomsData, reservedRoomsColumnNames) {
+                private static final long serialVersionUID = 1L;
+
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            roomTable.setOpaque(false);
+            roomTable.getTableHeader().setReorderingAllowed(false);
+            roomTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            roomTable.setFont(tableFont);
+            roomTable.setForeground(tableTextColor);
+            roomTable.setGridColor(new Color(223, 223, 223));
+            roomTable.setShowGrid(true);
+            roomTable.setShowVerticalLines(false);
+
+            TableColumn roomTablecol = null;
+
+            for (int i = 0; i < roomTable.getColumnCount(); i++) {
+                if (i == 1 || i == 4 || i == 3) {
+                    roomTablecol.setMinWidth(80);
+                    roomTablecol.setPreferredWidth(80);
+                    roomTablecol.setMaxWidth(80);
+                } else if (i == 2) {
+                    roomTablecol.setMinWidth(120);
+                    roomTablecol.setPreferredWidth(120);
+                    roomTablecol.setMaxWidth(120);
+                } else if (i == 5) {
+                    roomTablecol.setMinWidth(550);
+                    roomTablecol.setPreferredWidth(550);
+                    roomTablecol.setMaxWidth(550);
+                }
+                roomTablecol = roomTable.getColumnModel().getColumn(i);
+                roomTablecol.setCellRenderer(new CustomTableCellRenderer());
+                roomTablecol.setResizable(false);
+            }
+
+            JTableHeader roomHeader = roomTable.getTableHeader();
+            roomHeader.setBackground(new Color(80, 169, 169));
+
+            final JScrollPane roomTableContainer = new JScrollPane(roomTable);
+            roomTableContainer.getViewport().setBackground(contentColor);
+            roomTableContainer.setMinimumSize(new Dimension(1100, 505));
+            roomTableContainer.setPreferredSize(new Dimension(1100, 505));
+            roomTableContainer.setMaximumSize(new Dimension(1100, 505));
+
+            centerUpPane1.add(roomTableContainer);
+
+            JButton viewStaffs = new JButton("Staffs");
+            viewStaffs.setBackground(new Color(198, 192, 128));
+            viewStaffs.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                    centerPaneContainer.removeAll();
+                    centerPaneContainer.add(adminCenterPane());
+                    centerPaneContainer.repaint();
+                }
+            });
+
+            JButton addRooms = new JButton("Add");
+            addRooms.setPreferredSize(viewStaffs.getPreferredSize());
+            addRooms.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new AddRooms();
+                }
+            });
+
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+            buttonPanel.add(Box.createHorizontalGlue());
+            buttonPanel.setBackground(myColor);
+
+            JButton cancel_Button = new JButton("Cancel");
+            JButton add_Button = new JButton("Add");
+            add_Button.setPreferredSize(cancel_Button.getPreferredSize());
+
+            buttonPanel.add(viewStaffs);
+            buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+            buttonPanel.add(addRooms);
+
+            centerPane.removeAll();
+            centerPane.add(centerUpPane1);
+            centerPane.add(Box.createRigidArea(new Dimension(0, 10)));
+            centerPane.add(buttonPanel);
+
         });
 
         final JButton editStaff = new JButton("Edit");
@@ -2048,27 +2006,20 @@ public class MainFrame {
         leftUpPaneContainer.setBackground(new Color(223, 222, 212));
         leftUpPaneContainer.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
-        // Make the border of the leftPanel round corner
         JPanel leftUpPane = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Dimension arcs = new Dimension(10, 10); // Border corners arcs
-                // {width,height},
-                // change this to
-                // whatever you want
+                Dimension arcs = new Dimension(10, 10);
                 int width = getWidth();
                 int height = getHeight();
                 Graphics2D graphics = (Graphics2D) g;
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Draws the rounded panel with borders.
                 graphics.setColor(getBackground());
                 graphics.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height);// paint
-                // background
                 graphics.setColor(getForeground());
                 graphics.drawRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height);// paint
-                // border
             }
         };
         leftUpPane.setBackground(new Color(240, 240, 240));
@@ -2199,11 +2150,9 @@ public class MainFrame {
             roomTablecol.setResizable(false);
         }
 
-        viewCostomer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ViewQuest.viewColumnData = l6.getText();
-                new ViewQuest();
-            }
+        viewCostomer.addActionListener(e -> {
+            ViewQuest.viewColumnData = l6.getText();
+            new ViewQuest();
         });
 
         roomTable.getSelectionModel().clearSelection();
@@ -2498,103 +2447,101 @@ public class MainFrame {
 
         JButton availableRooms = new JButton("Available");
         availableRooms.setPreferredSize(allRooms.getPreferredSize());
-        availableRooms.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        availableRooms.addActionListener(e -> {
 
-                viewCostomer.setEnabled(false);
+            viewCostomer.setEnabled(false);
 
-                final JPanel centerUpPane = new JPanel();
-                centerUpPane.setLayout(new BoxLayout(centerUpPane, BoxLayout.PAGE_AXIS));
-                TitledBorder centerUpBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), " AVAILABLE ROOMS ");
-                centerUpBorder.setTitleJustification(TitledBorder.CENTER);
-                centerUpPane.setBorder(centerUpBorder);
-                centerUpPane.setBackground(myColor);
+            final JPanel centerUpPane1 = new JPanel();
+            centerUpPane1.setLayout(new BoxLayout(centerUpPane1, BoxLayout.PAGE_AXIS));
+            TitledBorder centerUpBorder1 = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), " AVAILABLE ROOMS ");
+            centerUpBorder1.setTitleJustification(TitledBorder.CENTER);
+            centerUpPane1.setBorder(centerUpBorder1);
+            centerUpPane1.setBackground(myColor);
 
-                final Vector<String> reservedRoomsColumnNames = new Vector<String>();
-                final Vector<Vector<Object>> reservedRoomsData = new Vector<Vector<Object>>();
+            final Vector<String> reservedRoomsColumnNames1 = new Vector<String>();
+            final Vector<Vector<Object>> reservedRoomsData1 = new Vector<Vector<Object>>();
 
-                try {
-                    String reserved = "Available";
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
+            try {
+                String reserved = "Available";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
-                    String sql = "SELECT * FROM `rooms` WHERE `Status`='" + reserved + "' ORDER BY `Room No`";
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(sql);
-                    ResultSetMetaData md = rs.getMetaData();
-                    int columns = md.getColumnCount();
+                String sql = "SELECT * FROM `rooms` WHERE `Status`='" + reserved + "' ORDER BY `Room No`";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                ResultSetMetaData md = rs.getMetaData();
+                int columns = md.getColumnCount();
+                for (int i = 1; i <= columns; i++) {
+                    reservedRoomsColumnNames1.addElement(md.getColumnName(i));
+                }
+                while (rs.next()) {
+                    Vector<Object> row = new Vector<Object>(columns);
                     for (int i = 1; i <= columns; i++) {
-                        reservedRoomsColumnNames.addElement(md.getColumnName(i));
+                        row.addElement(rs.getObject(i));
                     }
-                    while (rs.next()) {
-                        Vector<Object> row = new Vector<Object>(columns);
-                        for (int i = 1; i <= columns; i++) {
-                            row.addElement(rs.getObject(i));
-                        }
-                        reservedRoomsData.addElement(row);
-                    }
-                    rs.close();
-                    stmt.close();
-                } catch (Exception ex) {
-                    System.out.println(ex);
+                    reservedRoomsData1.addElement(row);
                 }
-
-                JTable roomTable = new JTable(reservedRoomsData, reservedRoomsColumnNames) {
-                    private static final long serialVersionUID = 1L;
-
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-
-                roomTable.setOpaque(false);
-                roomTable.getTableHeader().setReorderingAllowed(false);
-                roomTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                roomTable.setFont(tableFont);
-                roomTable.setForeground(tableTextColor);
-                roomTable.setGridColor(new Color(223, 223, 223));
-                roomTable.setShowGrid(true);
-                roomTable.setShowVerticalLines(false);
-
-                TableColumn roomTablecol = null;
-
-                for (int i = 0; i < roomTable.getColumnCount(); i++) {
-                    if (i == 1 || i == 4 || i == 3) {
-                        roomTablecol.setMinWidth(80);
-                        roomTablecol.setPreferredWidth(80);
-                        roomTablecol.setMaxWidth(80);
-                    } else if (i == 2) {
-                        roomTablecol.setMinWidth(120);
-                        roomTablecol.setPreferredWidth(120);
-                        roomTablecol.setMaxWidth(120);
-                    } else if (i == 5) {
-                        roomTablecol.setMinWidth(550);
-                        roomTablecol.setPreferredWidth(550);
-                        roomTablecol.setMaxWidth(550);
-                    }
-                    roomTablecol = roomTable.getColumnModel().getColumn(i);
-                    roomTablecol.setCellRenderer(new CustomTableCellRenderer());
-                    roomTablecol.setResizable(false);
-                }
-
-                JTableHeader roomHeader = roomTable.getTableHeader();
-                roomHeader.setBackground(new Color(80, 169, 169));
-
-                JScrollPane roomTableContainer = new JScrollPane(roomTable);
-                roomTableContainer.getViewport().setBackground(contentColor);
-
-                roomTableContainer.setMinimumSize(new Dimension(1100, 500));
-                roomTableContainer.setPreferredSize(new Dimension(1100, 500));
-                roomTableContainer.setMaximumSize(new Dimension(1100, 500));
-
-                centerUpPane.add(roomTableContainer);
-
-                centerPane.removeAll();
-                centerPane.add(centerUpPane);
-                centerPane.add(Box.createRigidArea(new Dimension(0, 10)));
-                centerPane.add(roomButtonPane);
-
+                rs.close();
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
+
+            JTable roomTable1 = new JTable(reservedRoomsData1, reservedRoomsColumnNames1) {
+                private static final long serialVersionUID = 1L;
+
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            roomTable1.setOpaque(false);
+            roomTable1.getTableHeader().setReorderingAllowed(false);
+            roomTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            roomTable1.setFont(tableFont);
+            roomTable1.setForeground(tableTextColor);
+            roomTable1.setGridColor(new Color(223, 223, 223));
+            roomTable1.setShowGrid(true);
+            roomTable1.setShowVerticalLines(false);
+
+            TableColumn roomTablecol1 = null;
+
+            for (int i = 0; i < roomTable1.getColumnCount(); i++) {
+                if (i == 1 || i == 4 || i == 3) {
+                    roomTablecol1.setMinWidth(80);
+                    roomTablecol1.setPreferredWidth(80);
+                    roomTablecol1.setMaxWidth(80);
+                } else if (i == 2) {
+                    roomTablecol1.setMinWidth(120);
+                    roomTablecol1.setPreferredWidth(120);
+                    roomTablecol1.setMaxWidth(120);
+                } else if (i == 5) {
+                    roomTablecol1.setMinWidth(550);
+                    roomTablecol1.setPreferredWidth(550);
+                    roomTablecol1.setMaxWidth(550);
+                }
+                roomTablecol1 = roomTable1.getColumnModel().getColumn(i);
+                roomTablecol1.setCellRenderer(new CustomTableCellRenderer());
+                roomTablecol1.setResizable(false);
+            }
+
+            JTableHeader roomHeader1 = roomTable1.getTableHeader();
+            roomHeader1.setBackground(new Color(80, 169, 169));
+
+            JScrollPane roomTableContainer1 = new JScrollPane(roomTable1);
+            roomTableContainer1.getViewport().setBackground(contentColor);
+
+            roomTableContainer1.setMinimumSize(new Dimension(1100, 500));
+            roomTableContainer1.setPreferredSize(new Dimension(1100, 500));
+            roomTableContainer1.setMaximumSize(new Dimension(1100, 500));
+
+            centerUpPane1.add(roomTableContainer1);
+
+            centerPane.removeAll();
+            centerPane.add(centerUpPane1);
+            centerPane.add(Box.createRigidArea(new Dimension(0, 10)));
+            centerPane.add(roomButtonPane);
+
         });
 
         JButton reservedRooms = new JButton("Reserved");
