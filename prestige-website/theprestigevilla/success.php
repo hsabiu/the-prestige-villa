@@ -1,14 +1,14 @@
 <?php
-    session_start();
- 	$arrival = $_SESSION['arrival'];
-	$departure = $_SESSION['departure'];
-	$room_type = $_SESSION['room_type'];
-	$room_prize = $_SESSION['room_prize'];
-	$total_prize = $_SESSION['total_prize'];
-	$resNo = $_SESSION['resNo'];
-    $no_days = $_SESSION['no_days'];
-	
-	session_destroy();
+session_start();
+$arrival = $_SESSION['arrival'];
+$departure = $_SESSION['departure'];
+$room_type = $_SESSION['room_type'];
+$room_prize = $_SESSION['room_prize'];
+$total_prize = $_SESSION['total_prize'];
+$resNo = $_SESSION['resNo'];
+$no_days = $_SESSION['no_days'];
+
+session_destroy();
 
 ?>
 

@@ -1,94 +1,85 @@
 <?php
 
-  if(isset($_POST['search_date']) && isset($_POST['search_room'])){
-    $search_date = $_POST['search_date'];
-    $search_room = $_POST['search_room'];
- 
-  if(!empty($search_date) && !empty($search_room)){
-  
+if (isset($_POST['search_date']) && isset($_POST['search_room'])) {
+  $search_date = $_POST['search_date'];
+  $search_room = $_POST['search_room'];
+
+  if (!empty($search_date) && !empty($search_room)) {
+
     $mysql_host = 'localhost';
-	$mysql_user = 'root';
-	$mysql_pass = '';
-	$mysql_db = 'prestige_villa_db';
-		
-	if(!@mysql_connect($mysql_host, $mysql_user, $mysql_pass) || !@mysql_select_db($mysql_db)){
-	  echo "Could not connect.";
-	}
-	else{
-	  $query_run = mysql_query("SELECT `Room No` FROM  `rooms` WHERE  `Status` =  'Available' && `Room Type` = '$search_room' ORDER BY `Room No` ASC LIMIT 1");
-	  if(mysql_num_rows($query_run) > 0){
-	    mysql_num_rows($query_run);
-	    $availableFlag = true;
-	  }
-	  else{
-	     $availableFlag = false;
-	  }
-	}
-	
-   if($availableFlag == true){
+    $mysql_user = 'root';
+    $mysql_pass = '';
+    $mysql_db = 'prestige_villa_db';
+
+    if (!@mysql_connect($mysql_host, $mysql_user, $mysql_pass) || !@mysql_select_db($mysql_db)) {
+      echo "Could not connect.";
+    } else {
+      $query_run = mysql_query("SELECT `Room No` FROM  `rooms` WHERE  `Status` =  'Available' && `Room Type` = '$search_room' ORDER BY `Room No` ASC LIMIT 1");
+      if (mysql_num_rows($query_run) > 0) {
+        mysql_num_rows($query_run);
+        $availableFlag = true;
+      } else {
+        $availableFlag = false;
+      }
+    }
+
+    if ($availableFlag == true) {
       header('Location: available.html');
-	} 
-   else{ 
+    } else {
       header('Location: unavailable.php');
     }
   }
 }
 
 
-   if(isset($_POST['contact_name']) && isset($_POST['contact_email']) && isset($_POST['contact_phone']) && isset($_POST['comments'])){
-    $contact_name = strtoupper($_POST['contact_name']);
-	$contact_email = strtoupper($_POST['contact_email']);
-	$contact_phone = strtoupper($_POST['contact_phone']);
-	$comments = $_POST['comments'];
-		
-	if(!empty($contact_name) && !empty($contact_email) && !empty($contact_phone) && !empty($comments)){
-	 if(strlen($contact_name) > 25 || strlen($contact_email) > 50 || strlen($contact_phone) > 20 || strlen($comments) > 1000){
-	   echo "Maximum length for one or more field exceeded";
-	 }
-	 else{
-	   $to = 'habibado2006@gmail.com';
-	   $subject = 'Contact Form';
-       $body = 'Name: '.$contact_name."\n".'Phone No.: '.$contact_phone."\n".$comments;
-	   $headers = 'From: $contcat_email';
-	 
-	   if(mail($to, $subject, $body, $headers)){
-	     $contactflag = true;
-	   }
-	   else{
-	     echo "Soory and error occurs, please try again";
-	    }
-	  }
-	}
-	
-    if($contactflag == true){
-      header('Location: contacted.html');
-	} 
-	
-	  if(empty($contact_name)){
-        $f1 = true;
+if (isset($_POST['contact_name']) && isset($_POST['contact_email']) && isset($_POST['contact_phone']) && isset($_POST['comments'])) {
+  $contact_name = strtoupper($_POST['contact_name']);
+  $contact_email = strtoupper($_POST['contact_email']);
+  $contact_phone = strtoupper($_POST['contact_phone']);
+  $comments = $_POST['comments'];
+
+  if (!empty($contact_name) && !empty($contact_email) && !empty($contact_phone) && !empty($comments)) {
+    if (strlen($contact_name) > 25 || strlen($contact_email) > 50 || strlen($contact_phone) > 20 || strlen($comments) > 1000) {
+      echo "Maximum length for one or more field exceeded";
+    } else {
+      $to = 'habibado2006@gmail.com';
+      $subject = 'Contact Form';
+      $body = 'Name: ' . $contact_name . "\n" . 'Phone No.: ' . $contact_phone . "\n" . $comments;
+      $headers = 'From: $contcat_email';
+
+      if (mail($to, $subject, $body, $headers)) {
+        $contactflag = true;
+      } else {
+        echo "Soory and error occurs, please try again";
       }
-      else{
-        $f1 = false;  
-      }
-      if(empty($contact_email)){
-        $f2 = true;
-      }
-      else{
-        $f2 = false;  
-      }
-      if(empty($contact_phone)){
-        $f3 = true;
-      }
-      else{
-        $f3 = false;  
-     }
-     if(empty($comments)){
-       $f4 = true;
-     }
-    else{
-      $f4 = false;  
-     }
+    }
   }
+
+  if ($contactflag == true) {
+    header('Location: contacted.html');
+  }
+
+  if (empty($contact_name)) {
+    $f1 = true;
+  } else {
+    $f1 = false;
+  }
+  if (empty($contact_email)) {
+    $f2 = true;
+  } else {
+    $f2 = false;
+  }
+  if (empty($contact_phone)) {
+    $f3 = true;
+  } else {
+    $f3 = false;
+  }
+  if (empty($comments)) {
+    $f4 = true;
+  } else {
+    $f4 = false;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -223,31 +214,57 @@
 		 <p>Thank you for your interest in Prestige Villa. To contact us, please fill the form below. Note that this is not a booking or reservations area, if you would like to book or make a reservation, please click the appropriate tab on the top of the page. We want to hear from you-about your experience while staying at our boutique hotel, about our website or anything else you would like to share with us. Please take a few minutes to send us your comments or questions. If you require immediate assistance, please call the appropriate telephone number on the right.</p><br/>
 		 
 	  <div class="container" style="border: 1px solid #c0c0c0; background: #F4F1EF; padding: 20px; width: 700px; margin-left: 0;">
-	   <?php if(isset($contact_name) && isset($contact_email) && isset($contact_phone) && isset($comments)){if($f1 == true || $f2 == true || $f3 == true || $f4 == true){ echo '<p><b style="color: #FF0000;">Note: </b>All fields marked with <b style="font-size: 20px; color: #FF0000;">*</b> are required.</p>' ;}} ?>
+	   <?php if (isset($contact_name) && isset($contact_email) && isset($contact_phone) && isset($comments)) {
+      if ($f1 == true || $f2 == true || $f3 == true || $f4 == true) {
+        echo '<p><b style="color: #FF0000;">Note: </b>All fields marked with <b style="font-size: 20px; color: #FF0000;">*</b> are required.</p>';
+      }
+    } ?>
 
 	  <form action="contact.php" method="POST">
-	     <label>Name <?php if(isset($contact_name)){if($f1 == true){echo '<b style="font-size: 20px; color: #FF0000;">*</b>';}} ?></label><br/>
+	     <label>Name <?php if (isset($contact_name)) {
+                    if ($f1 == true) {
+                      echo '<b style="font-size: 20px; color: #FF0000;">*</b>';
+                    }
+                  } ?></label><br/>
          <div class="row">
            <div class="col-xs-6">
-             <input type="text" name="contact_name" class="form-control" placeholder="Enter Your Name" maxlength="25" required value="<?php if(isset($contact_name)){ echo $contact_name;}?>">
+             <input type="text" name="contact_name" class="form-control" placeholder="Enter Your Name" maxlength="25" required value="<?php if (isset($contact_name)) {
+                                                                                                                                        echo $contact_name;
+                                                                                                                                      } ?>">
            </div>
          </div>
          <br>
-		 <label>Email <?php if(isset($contact_email)){if($f2 == true){echo '<b style="font-size: 20px; color: #FF0000;">*</b>';}} ?></label><br/>
+		 <label>Email <?php if (isset($contact_email)) {
+                  if ($f2 == true) {
+                    echo '<b style="font-size: 20px; color: #FF0000;">*</b>';
+                  }
+                } ?></label><br/>
          <div class="row">
            <div class="col-xs-6">
-             <input type="email" name="contact_email" class="form-control" placeholder="Enter Your Email" maxlength="50" required value="<?php if(isset($contact_email)){ echo $contact_email;}?>">
+             <input type="email" name="contact_email" class="form-control" placeholder="Enter Your Email" maxlength="50" required value="<?php if (isset($contact_email)) {
+                                                                                                                                          echo $contact_email;
+                                                                                                                                        } ?>">
            </div>
          </div>
          <br>
-		 <label>Phone Number <?php if(isset($contact_phone)){if($f3 == true){echo '<b style="font-size: 20px; color: #FF0000;">*</b>';}} ?></label><br/>
+		 <label>Phone Number <?php if (isset($contact_phone)) {
+                        if ($f3 == true) {
+                          echo '<b style="font-size: 20px; color: #FF0000;">*</b>';
+                        }
+                      } ?></label><br/>
          <div class="row">
            <div class="col-xs-6">
-             <input type="text" name="contact_phone" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Enter Yor Phone Number" maxlength="20" required value="<?php if(isset($contact_phone)){ echo $contact_phone;}?>">
+             <input type="text" name="contact_phone" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Enter Yor Phone Number" maxlength="20" required value="<?php if (isset($contact_phone)) {
+                                                                                                                                                                                      echo $contact_phone;
+                                                                                                                                                                                    } ?>">
            </div>
          </div>
          <br>
-		 <label>Comments Or Requests <?php if(isset($comments)){if($f4 == true){echo '<b style="font-size: 20px; color: #FF0000;">*</b>';}} ?></label><br/>
+		 <label>Comments Or Requests <?php if (isset($comments)) {
+                                if ($f4 == true) {
+                                  echo '<b style="font-size: 20px; color: #FF0000;">*</b>';
+                                }
+                              } ?></label><br/>
          <div class="row">
            <div class="col-xs-9">
              <textarea name="comments" class="form-control" rows="7" placeholder="What will you like to know?" maxlength="1000" required></textarea>
