@@ -47,12 +47,12 @@ if (isset($_POST['search_date']) && isset($_POST['search_room'])) {
 	<link rel="stylesheet" href="themes/base/jquery.ui.all.css">
 
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="ui/jquery.ui.core.js"></script>
 	<script src="ui/jquery.ui.widget.js"></script>
 	<script src="ui/jquery.ui.effect.js"></script>
-    <script src="ui/jquery.ui.effect-drop.js"></script>
+  <script src="ui/jquery.ui.effect-drop.js"></script>
 	<script src="ui/jquery.ui.datepicker.js"></script>
 
 	
@@ -106,8 +106,7 @@ if (isset($_POST['search_date']) && isset($_POST['search_room'])) {
       </div>
     </div>
 	
-	 <!-- Carousel
-    ================================================== -->
+	 <!-- Carousel -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">

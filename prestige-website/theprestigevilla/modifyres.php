@@ -364,18 +364,19 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['p
            </div>
            <div class="col-xs-5">
 		     <label>Country</label><br/>
-             <select class="form-control" name="country">
-		        <option value="Belarus" selected="selected">Belarus</option>
+            <select class="form-control" name="country">
+            <option value="Belarus" selected="selected">Belarus</option>
+		        <option value="Canada">Canada</option>
 		        <option value="China">China</option>
 		        <option value="England">England</option>
-				<option value="Germany">Germany</option>
-				<option value="Ghana">Ghana</option>
-				<option value="Gungary">Hungary</option>
-				<option value="Nigeria">Nigeria</option>
-				<option value="Niger">Niger</option>
-				<option value="Poland">Poland</option>
-				<option value="Ukraine">Ukraine</option>
-				<option value="USA">USA</option>
+            <option value="Germany">Germany</option>
+            <option value="Ghana">Ghana</option>
+            <option value="Gungary">Hungary</option>
+            <option value="Nigeria">Nigeria</option>
+            <option value="Niger">Niger</option>
+            <option value="Poland">Poland</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="USA">USA</option>
 	         </select>
            </div>
          </div>
