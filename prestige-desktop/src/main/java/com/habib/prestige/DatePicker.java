@@ -11,38 +11,35 @@ import org.jdesktop.swingx.JXDatePicker;
 
 class DatePicker extends JXDatePicker {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	DatePicker() {
+    DatePicker() {
 
-		setDate(Calendar.getInstance().getTime());
-		setFormats(new SimpleDateFormat("dd/MM/yyyy"));
+        setDate(Calendar.getInstance().getTime());
+        setFormats(new SimpleDateFormat("dd/MM/yyyy"));
 
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-	}
+    }
 
-	public Date returnDate() {
-		Date dt = getDate();
-		return dt;
-	}
+    Date returnDate() {
+        return getDate();
+    }
 
-	public String returnStringDate() {
+    String returnStringDate() {
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-		Date dt = getDate();
-		String formatedDate = dateFormat.format(dt);
-
-		return formatedDate;
-	}
+        Date dt = getDate();
+        return dateFormat.format(dt);
+    }
 }

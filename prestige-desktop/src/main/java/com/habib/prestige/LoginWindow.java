@@ -7,10 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.geom.RoundRectangle2D;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,22 +27,19 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 public class LoginWindow {
 
     static String user;
-    private Connection con;
-    private Statement st;
-    private ResultSet rs;
     private JFrame loginFrame;
     private JTextField userNameValue;
     private JPasswordField passWordValue;
-    private JButton login;
-    private JButton exit;
+    private static DBConnection dbConnection;
+    private static ResultSet rs;
 
     private LoginWindow() {
+
+        JButton login;
+        JButton exit;
 
         loginFrame = new JFrame();
         loginFrame.setSize(500, 460);
@@ -161,6 +155,9 @@ public class LoginWindow {
     }
 
     public static void main(String[] args) {
+
+        dbConnection = new DBConnection();
+
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -173,48 +170,37 @@ public class LoginWindow {
         }
 
         try {
-            String strTheDay = new SimpleDateFormat("dd/MM/yyyy").format(new Date()).toString();
 
-            LocalDate theDay = LocalDate.parse(strTheDay, DateTimeFormat.forPattern("dd/MM/yyyy"));
-            LocalDate dayBefore = theDay.minusDays(1);
-
-            String str4 = new SimpleDateFormat("dd/MM/yyyy").format(dayBefore.toDate()).toString();
-
+            String strTheDay = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
             SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date1 = dtFormat.parse(str4);
 
-            Connection con;
-            Statement st;
-            ResultSet rs;
+            Date dtToday = dtFormat.parse(strTheDay);
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
-
-            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            rs = st.executeQuery("SELECT * FROM `reservations` WHERE `Status`= 'Waiting'");
+            rs = dbConnection.getStatement().executeQuery("SELECT * FROM `reservations` WHERE `Status`= 'Waiting'");
 
             while (rs.next()) {
-                String strDate = rs.getString("Arrival");
-                Date date2 = dtFormat.parse(strDate);
 
-                if (date2.before(date1)) {
-                    rs.updateString("Status", "Canceled");
-                    rs.updateString("CancelDate", (new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toString());
+                Date dtArrival = dtFormat.parse(rs.getString("Arrival"));
+                String strRoomNo = rs.getString("Room No");
 
-                    rs.updateRow();
+                if (dtArrival.before(dtToday)) {
+                    String cancelDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                    DBConnection updateConnection = new DBConnection();
 
-                    String str3 = rs.getString("Room No");
-
-                    Statement st1 = con.createStatement();
-                    st1.executeUpdate("UPDATE `rooms` SET `Status` = 'Available' WHERE `Room No`='" + str3 + "'");
+                    updateConnection.getStatement().executeUpdate("UPDATE `reservations` SET `Status` = 'Canceled' WHERE `Room No`='" + strRoomNo + "'");
+                    updateConnection.getStatement().executeUpdate("UPDATE `reservations` SET `CancelDate` = '" + cancelDate + "' WHERE `Room No`='" + strRoomNo + "'");
+                    updateConnection.getStatement().executeUpdate("UPDATE `rooms` SET `Status` = 'Available' WHERE `Room No`='" + strRoomNo + "'");
+                    updateConnection.getConnection().close();
                 }
             }
+            rs.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         new LoginWindow();
+
     }
 
     private void buttonAction() {
@@ -227,18 +213,17 @@ public class LoginWindow {
             String pass = new String(x);
 
             if (user.equals("")) {
-                JOptionPane.showMessageDialog(null, "Plese provide your Staff ID");
+                JOptionPane.showMessageDialog(null, "Please provide your Staff ID");
             } else if (pass.equals("")) {
-                JOptionPane.showMessageDialog(null, "Plese provide your Password");
+                JOptionPane.showMessageDialog(null, "Please provide your Password");
             } else {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa", "root", "root");
 
                 String sql = "SELECT * FROM `users` WHERE `users`.`Staff ID` = '" + user + "' AND `users`.`Password` = '" + pass + "'";
-                st = con.createStatement();
-                rs = st.executeQuery(sql);
+
+                rs = dbConnection.getStatement().executeQuery(sql);
 
                 if (rs.first()) {
+
                     if (rs.getString("User Type").equals("Receptionist")) {
 
                         new MainFrame();
@@ -250,6 +235,7 @@ public class LoginWindow {
                         MainFrame.logo.setIcon(new ImageIcon(LoginWindow.class.getResource("/icons/waiter1.png")));
 
                     } else if (rs.getString("User Type").equals("Manager")) {
+
                         new MainFrame();
 
                         loginFrame.dispose();
@@ -262,7 +248,6 @@ public class LoginWindow {
                         MainFrame.welcomeLabel.setText("ADMIN");
                         MainFrame.logo.setIcon(new ImageIcon(LoginWindow.class.getResource("/icons/administrator1.png")));
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid User ID or Password");
                     userNameValue.setText("");
@@ -271,7 +256,7 @@ public class LoginWindow {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Cannot connect to the database, makesure the server at localhost is up and running");
+            JOptionPane.showMessageDialog(null, "Cannot connect to the database, ensure the database server at localhost is up and running");
         }
     }
 }
