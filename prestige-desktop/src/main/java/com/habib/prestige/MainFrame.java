@@ -455,7 +455,7 @@ public class MainFrame {
             }
         });
 
-        postponedButton_1 = new JButton("Postponed");
+        postponedButton_1 = new JButton("Postpone");
         postponedButton_1.setEnabled(false);
         postponedButton_1.addActionListener(e -> {
             PostponeReservation.resColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
@@ -465,11 +465,9 @@ public class MainFrame {
         viewButton_1 = new JButton("View");
         viewButton_1.setPreferredSize(postponedButton_1.getPreferredSize());
         viewButton_1.setEnabled(false);
-        viewButton_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ViewQuest.viewColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
-                new ViewQuest();
-            }
+        viewButton_1.addActionListener(e -> {
+            ViewQuest.viewColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
+            new ViewQuest();
         });
 
         editButton = new JButton("Edit");
@@ -761,7 +759,7 @@ public class MainFrame {
         JButton refresh = new JButton("Refresh All");
         refresh.addActionListener(e -> home.doClick());
 
-        postponedButton_2 = new JButton("Postponed");
+        postponedButton_2 = new JButton("Postpone");
         postponedButton_2.setPreferredSize(refresh.getPreferredSize());
         postponedButton_2.setEnabled(false);
         postponedButton_2.addActionListener(e -> {

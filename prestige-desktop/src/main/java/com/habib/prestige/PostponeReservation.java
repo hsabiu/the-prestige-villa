@@ -31,7 +31,7 @@ class PostponeReservation {
 
             Date dep_Date = new SimpleDateFormat("dd/MM/yyyy").parse(selectRs.getString("Departure"));
 
-            postpone.departureDateValue.setDate(dep_Date);
+            PostponeButton.departureDateValue.setDate(dep_Date);
 
             postpone.setVisible(true);
 
@@ -44,20 +44,20 @@ class PostponeReservation {
                     DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                     LocalDate departDate = dtf.parseLocalDate(updateRs.getString("Departure"));
 
-                    int dateBetween = Days.daysBetween(departDate, new DateTime(postpone.departureDateValue.returnDate()).toLocalDate()).getDays();
+                    int dateBetween = Days.daysBetween(departDate, new DateTime(PostponeButton.departureDateValue.returnDate()).toLocalDate()).getDays();
                     int intPrize = Integer.parseInt(updateRs.getString("Room Rate"));
                     int inResult = intPrize * dateBetween;
-                    Integer updatedDays = Integer.parseInt(updateRs.getString("Days")) + dateBetween;
-                    Integer updatePrize = Integer.parseInt(updateRs.getString("Total Prize")) + inResult;
+                    int updatedDays = Integer.parseInt(updateRs.getString("Days")) + dateBetween;
+                    int updatePrize = Integer.parseInt(updateRs.getString("Total Prize")) + inResult;
 
-                    updateRs.updateString("Departure", postpone.departureDateValue.returnStringDate());
-                    updateRs.updateString("Days", updatedDays.toString());
-                    updateRs.updateString("Total Prize", updatePrize.toString());
+                    updateRs.updateString("Departure", PostponeButton.departureDateValue.returnStringDate());
+                    updateRs.updateString("Days", Integer.toString(updatedDays));
+                    updateRs.updateString("Total Prize", Integer.toString(updatePrize));
 
                     updateRs.updateRow();
 
                     int choice;
-                    choice = JOptionPane.showConfirmDialog(null, "Balace : =N=" + inResult + " Do you want to pospond?", "Warning", JOptionPane.YES_NO_OPTION);
+                    choice = JOptionPane.showConfirmDialog(null, "Balance : =N=" + inResult + " Do you want to postpone?", "Warning", JOptionPane.YES_NO_OPTION);
                     if (choice == 0) {
                         JOptionPane.showMessageDialog(null, "Reservation pospond");
                         postpone.dispose();

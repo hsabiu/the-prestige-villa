@@ -14,7 +14,7 @@ class MyDate extends JLabel {
         Date today = new Date();
         DateFormat myFormat = DateFormat.getDateInstance(DateFormat.FULL);
         setForeground(new Color(133, 5, 20));
-        setFont(new Font("Costantia", Font.BOLD, 14));
+        setFont(new Font("Constantia", Font.BOLD, 14));
         setText(myFormat.format(today));
     }
 }

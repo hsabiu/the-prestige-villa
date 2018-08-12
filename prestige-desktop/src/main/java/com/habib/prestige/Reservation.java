@@ -19,11 +19,11 @@ import java.util.Vector;
 class Reservation extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    public static int dateBetween;
-    public static int reservationCounter;
-    public static Color textFieldColor = new Color(234, 238, 186);
-    public static Color textColor = new Color(70, 75, 14);
-    public static Font formFont = new Font("Courier New", Font.BOLD, 12);
+    static int dateBetween;
+    static int reservationCounter;
+    static Color textFieldColor = new Color(234, 238, 186);
+    static Color textColor = new Color(70, 75, 14);
+    static Font formFont = new Font("Courier New", Font.BOLD, 12);
 
     JLabel reservation_Number;
     JTextField fnameValue;
@@ -399,7 +399,7 @@ class Reservation extends JFrame {
         roomNumber.setFont(formFont);
         roomNumber.setForeground(textColor);
 
-        roomNumber_Value = new JComboBox<Object>();
+        roomNumber_Value = new JComboBox<>();
         roomNumber_Value.setMinimumSize(new Dimension(70, 30));
         roomNumber_Value.setPreferredSize(new Dimension(70, 30));
         roomNumber_Value.setMaximumSize(new Dimension(70, 30));
@@ -470,13 +470,13 @@ class Reservation extends JFrame {
                     roomNumber_Value.setModel(new DefaultComboBoxModel(stringRoomNo));
                     roomNumber_Value.repaint();
 
-                    totalPrizeValue.setText(Integer.toString(Integer.parseInt(roomRate_Value.getText().toString()) * dateBetween));
+                    totalPrizeValue.setText(Integer.toString(Integer.parseInt(roomRate_Value.getText()) * dateBetween));
                 }
                 rs.close();
                 dbConnection.getStatement().close();
                 dbConnection.getConnection().close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                System.out.println(ex.toString());
             }
         });
 
