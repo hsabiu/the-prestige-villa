@@ -194,7 +194,8 @@ public class LoginWindow {
                 }
             }
             rs.close();
-
+            dbConnection.getStatement().close();
+            dbConnection.getConnection().close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -206,6 +207,7 @@ public class LoginWindow {
     private void buttonAction() {
 
         try {
+            dbConnection = new DBConnection();
 
             user = userNameValue.getText().trim();
             char[] x = passWordValue.getPassword();
@@ -253,6 +255,9 @@ public class LoginWindow {
                     userNameValue.setText("");
                     passWordValue.setText("");
                 }
+                rs.close();
+                dbConnection.getStatement().close();
+                dbConnection.getConnection().close();
             }
 
         } catch (Exception ex) {

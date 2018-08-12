@@ -1,13 +1,12 @@
 package com.habib.prestige;
 
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
-import org.jdesktop.swingx.JXDatePicker;
 
 class DatePicker extends JXDatePicker {
 

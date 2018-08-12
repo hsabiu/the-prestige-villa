@@ -458,8 +458,8 @@ public class MainFrame {
         postponedButton_1 = new JButton("Postponed");
         postponedButton_1.setEnabled(false);
         postponedButton_1.addActionListener(e -> {
-            PospondReservation.resColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
-            new PospondReservation();
+            PostponeReservation.resColumnData = arrive_table.getValueAt(arrive_table.getSelectedRow(), 0).toString();
+            new PostponeReservation();
         });
 
         viewButton_1 = new JButton("View");
@@ -765,9 +765,9 @@ public class MainFrame {
         postponedButton_2.setPreferredSize(refresh.getPreferredSize());
         postponedButton_2.setEnabled(false);
         postponedButton_2.addActionListener(e -> {
-            PospondReservation.resColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
-            new PospondReservation();
-            PospondButton.arriveDateValue.setEnabled(false);
+            PostponeReservation.resColumnData = depart_table.getValueAt(depart_table.getSelectedRow(), 0).toString();
+            new PostponeReservation();
+            PostponeButton.arriveDateValue.setEnabled(false);
         });
 
         viewButton_2 = new JButton("View");
@@ -1186,14 +1186,12 @@ public class MainFrame {
                 }
             });
 
-            cancel_Button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    int choice;
-                    choice = JOptionPane.showConfirmDialog(null, "Data not saved, do you want to cancel?", "Warning", JOptionPane.YES_NO_OPTION);
-                    if (choice == 0) {
-                        addRes.dispose();
-                        Reservation.reservationCounter -= 1;
-                    }
+            cancel_Button.addActionListener(e1 -> {
+                int choice;
+                choice = JOptionPane.showConfirmDialog(null, "Data not saved, do you want to cancel?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (choice == 0) {
+                    addRes.dispose();
+                    Reservation.reservationCounter -= 1;
                 }
             });
 

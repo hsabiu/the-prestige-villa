@@ -1,35 +1,17 @@
 package com.habib.prestige;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.geom.RoundRectangle2D;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRootPane;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
 
 class ChangePassword extends JFrame {
     private static final long serialVersionUID = 1L;
 
     ChangePassword() {
+        DBConnection dbConnection = new DBConnection();
         setSize(500, 350);
         setTitle("Change Password");
         setLocationRelativeTo(null);
@@ -134,11 +116,7 @@ class ChangePassword extends JFrame {
 
                     try {
 
-                        Class.forName("com.mysql.jdbc.Driver");
-                        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa_db", "root", "");
-
-                        Statement stmt = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                        ResultSet rs = stmt.executeQuery("SELECT * FROM `users` WHERE `Staff ID`='" + LoginWindow.user + "'");
+                        ResultSet rs = dbConnection.getStatement().executeQuery("SELECT * FROM `users` WHERE `Staff ID`='" + LoginWindow.user + "'");
 
                         rs.first();
 
@@ -151,7 +129,9 @@ class ChangePassword extends JFrame {
                         dispose();
 
                         MainFrame.userAccount();
-
+                        rs.close();
+                        dbConnection.getStatement().close();
+                        dbConnection.getConnection().close();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

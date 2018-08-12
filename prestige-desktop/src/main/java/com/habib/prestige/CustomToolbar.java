@@ -1,11 +1,8 @@
 package com.habib.prestige;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.ImageIcon;
-import javax.swing.JToolBar;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import java.awt.*;
 
 //This class override the default tool bars paintComponent method to produce a toolBar with a background image
 public class CustomToolbar extends JToolBar {

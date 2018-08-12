@@ -1,37 +1,19 @@
 package com.habib.prestige;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.geom.RoundRectangle2D;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.DecimalFormat;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
+import java.text.DecimalFormat;
 
 class AddRooms extends JFrame {
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     AddRooms() {
+        DBConnection dbConnection = new DBConnection();
         Color roomsColor = new Color(212, 216, 162);
         setSize(400, 450);
         setTitle("New Room");
@@ -80,7 +62,7 @@ class AddRooms extends JFrame {
 
         String[] roomTypes = {"Diplomatic", "Executive", "Super Executive"};
         final JComboBox roomTypeValues = new JComboBox(roomTypes);
-        roomTypeValues.setPreferredSize(new Dimension(100, 30));
+        roomTypeValues.setPreferredSize(new Dimension(150, 30));
         roomTypeValues.setSelectedItem(null);
 
         JLabel roomNo = new JLabel("Room No");
@@ -105,14 +87,7 @@ class AddRooms extends JFrame {
 
             try {
 
-                Connection con;
-                Statement st;
-                ResultSet rs;
-
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa_db", "root", "");
-                st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                rs = st.executeQuery("SELECT * FROM `rooms` WHERE `Room Type`='" + roomTypeValues.getSelectedItem().toString() + "' ORDER BY `Room No` DESC");
+                ResultSet rs = dbConnection.getStatement().executeQuery("SELECT * FROM `rooms` WHERE `Room Type`='" + roomTypeValues.getSelectedItem().toString() + "' ORDER BY `Room No` DESC");
 
                 rs.first();
 
@@ -125,6 +100,8 @@ class AddRooms extends JFrame {
 
                 roomNoValue.setText(s2);
                 roomPrizeValue.setText(rs.getString("Prize (=N=)"));
+
+                rs.close();
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -183,11 +160,7 @@ class AddRooms extends JFrame {
 
                 try {
 
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/prestige_villa_db", "root", "");
-
-                    Statement stmt = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM `rooms` ORDER BY `Room No`");
+                    ResultSet rs = dbConnection.getStatement().executeQuery("SELECT * FROM `rooms` ORDER BY `Room No`");
 
                     rs.moveToInsertRow();
 
@@ -211,15 +184,12 @@ class AddRooms extends JFrame {
                     JOptionPane.showMessageDialog(null, "New room added");
                     dispose();
 
-                    rs.close();
-                    stmt.close();
-
                     MainFrame.centerPaneContainer.removeAll();
                     MainFrame.centerPaneContainer.add(MainFrame.adminCenterPane());
 
-                    stmt = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    rs = stmt.executeQuery("SELECT * FROM `rooms` ORDER BY `Room No`");
-
+                    rs.close();
+                    dbConnection.getStatement().close();
+                    dbConnection.getConnection().close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

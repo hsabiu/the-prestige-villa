@@ -1,12 +1,10 @@
 package com.habib.prestige;
 
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 class CustomTableCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 1L;
